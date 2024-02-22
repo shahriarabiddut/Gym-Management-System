@@ -1,0 +1,168 @@
+.padd {
+    padding: 4rem 4rem;
+}
+
+body {
+    background-color: white !important;
+}
+
+.container .work-process {
+    background-color: white;
+}
+
+.works-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.works-header h2 {
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.works-header p {
+    font-size: 1.2rem;
+}
+
+.works {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 3rem;
+}
+
+.single-work {
+    text-align: center;
+    padding: 15px 30px !important;
+    background-color: #fb923c14;
+    border-radius: 10px;
+}
+
+.single-work img {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50px;
+}
+
+.single-work h3 {
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.single-work p {
+    font-size: 1rem;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.work-outs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 3rem;
+}
+
+.work-outs-show {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.work-outs-show img {
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.work-outs-show h3 {
+    font-size: 1.4rem;
+    margin: 1rem;
+    color: #f97316;
+    font-weight: 600;
+}
+
+/* About */
+
+.about-hero-content {
+    padding: 190px 0;
+    text-align: center;
+}
+
+.about-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-content p {
+    font-size: 18px;
+    line-height: 32px;
+    text-align: center;
+}
+
+.about-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+    margin-top: 60px;
+}
+
+.about-content-title {
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.about-text {
+    font-size: 18px;
+    line-height: 32px;
+
+    text-align: justify;
+}
+
+.about-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.about-people-text {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+span {
+    color: #ffa500;
+}
+
+.about-people-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 60px;
+}
+
+.people-card {
+    text-align: center;
+    overflow: hidden;
+}
+
+.people-card img {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.people-card img:hover {
+    transform: scale(0.95);
+}
+
+.people-card h4 {
+    font-size: 24px;
+    margin-top: 16px;
+}
+.bg-success {
+    background-color: green;
+    padding: 1%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    color: white;
+}

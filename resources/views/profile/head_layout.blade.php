@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> @yield('title') | @isset($SiteOption)
+        {{ $SiteOption[0]->value }}
+    @endisset </title>
+    <link rel="stylesheet" href="{{ asset('../css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('../css/bootstrap-responsive.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('../css/fullcalendar.css')}}" />
+    <link rel="stylesheet" href="{{ asset('../css/matrix-style.css')}}" />
+    <link rel="stylesheet" href="{{ asset('../css/matrix-media.css')}}" />
+    <link href="{{ asset('../font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('../css/jquery.gritter.css')}}" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    </head>
+<body>
+    <!--Header-part-->
+    <a href="{{ route('user.dashboard') }}">
+<div id="header">
+   <h1>@isset($SiteOption)
+    {{ $SiteOption[0]->value }}
+@endisset </h1>
+</div>
+</a>
+  <!--close-Header-part--> 
+  
+  
+  <!--top-Header-menu-->
+  <div id="user-nav" class="navbar navbar-inverse">
+      <ul class="nav right">
+        <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">Welcome {{ Auth::user()->name }}</span><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#"><i class="icon-user"></i> My Report</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
+            <li class="divider "></li>
+            <li><a href="{{ route('logout') }}" ><i class="icon-key"></i> Log Out</a></li>
+          </ul>
+        </li>
+        
+        <li class=""><a title="" href="{{ route('logout') }}"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+      </ul>
+    </div>
