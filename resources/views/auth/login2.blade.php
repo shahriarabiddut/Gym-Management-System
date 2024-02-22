@@ -27,7 +27,7 @@
 
 <body>
     
-  <div id="loginbox">
+  <div id="loginbox" style="margin-top: -7%">
       @error('email')
       <div style=" color: white; background-color: red; padding: 2%; font-size: large; " class="text-bold bg-danger text-center text-white p-2">{{ $message }}</div>
       @enderror
@@ -51,20 +51,18 @@
                   </div>
               </div>
           </div>
-          @if (Route::has('password.request'))
-            <p class="text-center">Forgot Your Password?
-                <a class="btn btn-block btn-large btn-warning"  href="{{ route('password.request') }}">Request New Password</a>
-            </p>
-            @endif
-            <hr>
-            <a class="btn btn-block btn-social" href="/auth/google/redirect"><img width="80%" height="50px" src="{{ asset('images/loginwithgoogle.png') }}" alt="">
-            </a>
           <div class="form-actions center">
-              <!-- <span class="pull-right"><a type="submit" href="index.html" class="btn btn-success" /> Login</a></span> -->
-              <!-- <input type="submit" class="button" title="Log In" name="login" value="Admin Login"></input> -->
               <button type="submit" class="btn btn-block btn-large btn-info" title="Log In" name="login" value="Admin Login"> Login</button>
           </div>
-          
+          <hr>
+            <a class="btn btn-block btn-social" href="/auth/google/redirect"><img width="75%" height="25px" src="{{ asset('images/loginwithgoogle.png') }}" alt="">
+            </a>
+          <hr>
+          @if (Route::has('password.request'))
+            <p class="text-center text-white">Forgot Your Password?
+                <a class="btn btn-block btn-sm btn-warning"  href="{{ route('password.request') }}">Request New Password</a>
+            </p>
+            @endif
           <hr>
           @if (Route::has('register'))
           <p class="text-center">
