@@ -29,10 +29,10 @@
              <h5>Membership</h5>
            </div>
            <div class="widget-content p-2">
-            @php $membership = json_decode(Auth::user()->member->membership, true);$member = Auth::user()->member; @endphp
-            @if ($membership==null)
-            <a href="{{ route('user.enroll.create') }}"><button>Enroll For Membership</button></a>
-            @else
+             @if ($membership==null)
+             <a href="{{ route('user.enroll.create') }}"><button>Enroll For Membership</button></a>
+             @else
+             @php $membership = json_decode(Auth::user()->member->membership, true);$member = Auth::user()->member; @endphp
              <table class='table table-striped table-bordered'>
              <tbody>
              <tr><td>Department </td><td>{{ $membership['dept'] }}</td> </tr>

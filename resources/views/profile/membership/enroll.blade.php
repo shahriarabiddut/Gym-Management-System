@@ -1,167 +1,254 @@
 @extends('layout2')
 @section('title', ' Enroll Membership | User Dashboard')
-<style>
-    #imagePreview {
-      max-width: 300px;
-      max-height: 300px;
-    }
-  </style>
-  <script>
-    window.onload = function() {
-      document.getElementById('imagePreview').style.display = 'none';
-    };
-
-    function previewImage(event) {
-      const input = event.target;
-      const file = input.files[0];
-      const imageType = /image.*/;
-      
-      if (file && file.size <= 2 * 1024 * 1024 && file.type.match(imageType)) {
-        const reader = new FileReader();
-        
-        reader.onload = function() {
-          const image = new Image();
-          image.src = reader.result;
-          
-          image.onload = function() {
-            if (image.width <= 300 && image.height <= 300) {
-              document.getElementById('imagePreview').style.display = 'block'; // Show the preview
-              document.getElementById('imagePreview').src = reader.result;
-            } else {
-              alert("Image dimensions should be 300x300 or less.");
-              input.value = '';
-            }
-          };
-        };
-        
-        reader.readAsDataURL(file);
-      } else {
-        if (file) {
-          alert("File is not an image, exceeds size limit (2MB), or does not meet the requirements.");
+<script>
+    function toggleFields() {
+        let optionSelect = document.getElementById("optionSelect").value;
+        let fname = document.getElementById("fname");
+        let mname = document.getElementById("mname");
+        let rollno = document.getElementById("rollno");
+        let dept = document.getElementById("dept");
+        let session = document.getElementById("session");
+        let podobi = document.getElementById("podobi");
+        let deptoffice = document.getElementById("deptoffice");
+        let staffRelationName = document.getElementById("staffRelationName");
+        let staffRelation = document.getElementById("staffRelation");
+        let staffRelationTitle = document.getElementById("staffRelationTitle");
+        let pradd = document.getElementById("pradd");
+        let paadd = document.getElementById("paadd");
+        let nameofinst = document.getElementById("nameofinst");
+        if (optionSelect === "1") {
+            fname.classList.remove("hidden");
+            mname.classList.remove("hidden");
+            rollno.classList.remove("hidden");
+            dept.classList.remove("hidden");
+            session.classList.remove("hidden");
+            //hide
+            podobi.classList.add("hidden");
+            deptoffice.classList.add("hidden");
+            staffRelationName.classList.add("hidden");
+            staffRelation.classList.add("hidden");
+            staffRelationTitle.classList.add("hidden");
+            pradd.classList.add("hidden");
+            paadd.classList.add("hidden");
+            nameofinst.classList.add("hidden");
+        } else if (optionSelect === "2") {
+            podobi.classList.remove("hidden");
+            deptoffice.classList.remove("hidden");
+            //hide
+            fname.classList.add("hidden");
+            mname.classList.add("hidden");
+            rollno.classList.add("hidden");
+            dept.classList.add("hidden");
+            session.classList.add("hidden");
+            staffRelationName.classList.add("hidden");
+            staffRelation.classList.add("hidden");
+            staffRelationTitle.classList.add("hidden");
+            pradd.classList.add("hidden");
+            paadd.classList.add("hidden");
+            nameofinst.classList.add("hidden");
+        } else if (optionSelect === "3") {
+            staffRelationName.classList.remove("hidden");
+            staffRelation.classList.remove("hidden");
+            staffRelationTitle.classList.remove("hidden");
+            //hide
+            podobi.classList.add("hidden");
+            deptoffice.classList.add("hidden");
+            fname.classList.add("hidden");
+            mname.classList.add("hidden");
+            rollno.classList.add("hidden");
+            dept.classList.add("hidden");
+            session.classList.add("hidden");
+            pradd.classList.add("hidden");
+            paadd.classList.add("hidden");
+            nameofinst.classList.add("hidden");
+        } else if (optionSelect === "4") {
+            fname.classList.remove("hidden");
+            pradd.classList.remove("hidden");
+            paadd.classList.remove("hidden");
+            nameofinst.classList.remove("hidden");
+            podobi.classList.remove("hidden");
+            //hide
+            deptoffice.classList.add("hidden");
+            mname.classList.add("hidden");
+            rollno.classList.add("hidden");
+            dept.classList.add("hidden");
+            session.classList.add("hidden");
+            staffRelationName.classList.add("hidden");
+            staffRelation.classList.add("hidden");
+            staffRelationTitle.classList.add("hidden");
         }
-        input.value = '';
-      }
     }
-  </script>
+</script>
 @section('content')
 <!-- Page Heading -->
 
-    <div class="container py-5">
+<div class="container py-5">
     <h1 class="border border-secondary rounded h3 mb-2 text-gray-800 p-2 bg-white"> Enroll </h1>
 
     <div class="table-responsive">
         @if ($errors->any())
-     @foreach ($errors->all() as $error)
-         <div class="bg-danger">{{$error}}</div>
-     @endforeach
-    @endif
-        <form method="POST" action="{{ route('user.enroll.store') }}" enctype="multipart/form-data">
+        @foreach ($errors->all() as $error)
+        <div class="bg-danger">{{$error}}</div>
+        @endforeach
+        @endif
+        <form id="registrationForm" enctype="multipart/form-data" method="POST" action="{{ route('user.enroll.store') }}">
             @csrf
             <table class="table table-bordered" id="dataTable" width="95%" cellspacing="0">
                 <tbody>
-                <tr>
-                    <th>Photo <span class="text-danger">*</span></th>
-                    <td><input required type="file" id="imageInput" name="photo" accept="image/*" class="form-control"  onchange="previewImage(event)" />
-                        <br />
-                        <img id="imagePreview" src="#" alt="Preview" style="display: none;" />
-                        </td>
+            <tr class="form-group">
+                <th>Select Your Category:</th>
+                <td><select class="form-control" id="optionSelect" name="category" required onchange="toggleFields()">
+                    <option selected value="0"> -- Select -- </option>
+                    <option value="1">Student</option>
+                    <option value="2">Teacher/Officer/Staff</option>
+                    <option value="3">Teacher/Officer/Staff(family)</option>
+                    <option value="4">Outside/Other</option>
+                </select></td>
+            </tr>
+                <tr class="form-group">
+                    <th>Name</th>
+                    <td><input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}"></td>
                 </tr>
-                <tr>
-                    <th>Name <span class="text-danger">*</span></th>
-                    <td><input readonly required name="name" type="text" class="form-control" value="{{ Auth::user()->name }}"></td>
+                <tr class="form-group hidden" id="fname">
+                    <th for="father-name">Father's Name</th>
+                    <td><input type="text" class="form-control" name="fname" value="{{ old('fname') }}"></td>
                 </tr>
-                <tr>
-                    <th>Department <span class="text-danger">*</span></th>
-                    <td><input required name="dept" type="text" class="form-control" value="{{ old('dept') }}" ></td>
+                <tr class="form-group hidden" id="mname">
+                    <th for="mother-name">Mother's Name</th>
+                    <td><input type="text" class="form-control" name="mname" value="{{ old('mname') }}"></td>
                 </tr>
-                @if (Auth::user()->type == 'student')
-                <tr>
-                    <th>Father's Name <span class="text-danger">*</span></th>
-                    <td><input name="fname" type="text" class="form-control" value="{{ old('fname') }}" > </td>
+                <tr class="form-group hidden" id="podobi">
+                    <th>Title</th>
+                    <td><input type="text" class="form-control" name="podobi" value="{{ old('podobi') }}"></td>
                 </tr>
-                <tr>
-                    <th>Mother's Name <span class="text-danger">*</span></th>
-                    <td><input name="mname" type="text" value="{{ old('mname') }}"  class="form-control"></td>
+
+                <tr class="form-group hidden" id="deptoffice">
+                    <th>Dept/Office</th>
+                    <td><input type="text" class="form-control" name="deptoffice" value="{{ old('deptoffice') }}"></td>
                 </tr>
-                <tr>
-                    <th>Session <span class="text-danger">*</span></th>
-                    <td><input name="session" type="text" value="{{ old('session') }}"  class="form-control"></td>
+                <tr class="form-group hidden" id="staffRelationName">
+                    <th> University working person Name</th>
+                    <td><input type="text" class="form-control" name="staffRelationName" value="{{ old('staffRelationName') }}"></td>
                 </tr>
-                <tr>
-                    <th>Roll No <span class="text-danger">*</span></th>
-                    <td><input name="rollno" type="text" value="{{ old('rollno') }}"  class="form-control"></td>
+                <tr class="form-group hidden" id="staffRelation">
+                    <th>University working person Relation</th>
+                   <td> <select class="form-control" name="staffRelation">
+                        <option value="1">Husband</option>
+                        <option value="2">Wife</option>
+                        <option value="3">Father</option>
+                        <option value="4">Mother</option>
+                        <option value="5">Other</option>
+                    </select></td>
                 </tr>
-                @endif
-                <tr>
-                    <th>Gender</th>
-                    <td>
-                        <select class="form-control" name="gender" id="">
-                            <option selected value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                    </td>
+                <tr class="form-group hidden" id="staffRelationTitle">
+                    <th>University working person title</th>
+                    <td><input type="text" class="form-control" name="staffRelationTitle" value="{{ old('staffRelationTitle') }}"></td>
                 </tr>
-                <tr>
-                    <th>NID no. <span class="text-danger">*</span></th>
-                    <td><input name="nidno" type="text" value="{{ old('nidno') }}"  class="form-control"></td>
+                <tr class="form-group hidden" id="nameofinst">
+                    <th>Name of the institution</th>
+                    <td><input type="text" class="form-control" name="nameofinst" value="{{ old('nameofinst') }}"></td>
                 </tr>
-                <tr>
-                    <th>Current Weight <span class="text-danger">*</span></th>
-                    <td><input required name="ini_weight" type="number" value="{{ old('ini_weight') }}"  class="form-control"></td>
-                </tr><tr>
-                    <th>Current Body Type</th>
-                    <td><input required name="ini_bodytype" type="text" value="{{ old('ini_bodytype') }}" class="form-control" placeholder="Slim,Medium,Fit,Fat"></td>
+
+                <tr class="form-group hidden" id="pradd">
+                    <th>Present Address</th>
+                    <td><input type="text" class="form-control" name="pradd" value="{{ old('pradd') }}"></td>
                 </tr>
-                <tr>
-                    <th>Registration Plans</th>
-                    <td>
-                        @if (Auth::user()->type == 'student')
-                        <table class="table-bordered" width="50%">
-                            <tr><th>বিবরণ</th> <td>টাকার পরিমাণ (মাসিক/ঘন্টা প্রতি)</td> </tr>
-                            <tr><th>1.রেজিস্ট্রেশন ফি (বাৎসরিক)</th><td>১০০/-</td></tr>
-                            <tr><th>2.মাসিক ফি</th><td>১০০/-</td></tr>
-                            <tr><th>3.আইডি কার্ড</th><td>১০০/-</td></tr>
-                        </table>
-                        @elseif (Auth::user()->type == 'teacher')
-                        <table class="table-bordered" width="50%">
-                            <tr> <th>বিবরণ</th> <td>টাকার পরিমাণ (মাসিক/ঘন্টা প্রতি)</td> </tr>
-                            <tr><th>1.রেজিস্ট্রেশন ফি (বাৎসরিক)</th><td>৪০০/-</td></tr>
-                            <tr><th>2.মাসিক ফি</th><td>২০০/-</td></tr>
-                            <tr><th>3.আইডি কার্ড</th><td>১০০/-</td></tr>
-                        </table>
-                        @endif
-                    </td>
+
+                <tr class="form-group hidden" id="paadd">
+                    <th>Permanent Address</th>
+                    <td><input type="text" class="form-control" name="paadd" value="{{ old('paadd') }}"></td>
                 </tr>
-                <tr>
-                    <th>Plan</th>
-                    <td>
-                        <select class="form-control" name="plan" id="">
-                            <option selected value="1">রেজিস্ট্রেশন</option>
-                            <option value="2">রেজিস্ট্রেশন ও আইডি কার্ড</option>
-                        </select>
-                    </td>
+                <tr class="form-group hidden" id="rollno">
+                    <th for="roll-number">Roll Number</th>
+                    <td><input type="text" class="form-control" name="rollno" value="{{ old('rollno') }}"></td>
                 </tr>
-                <tr>
+                <tr class="form-group">
+                    <th for="mobile-number">Mobile Number</th>
+                    <td><input type="tel" class="form-control" name="mobile" pattern="[0-9]{11}" value="{{ old('mobile') }}"></td>
+                </tr>
+
+                <tr class="form-group hidden" id="dept">
+                    <th for="department">Department</th>
+                   <td> <select class="form-control" name="dept">
+                        <option value="">Select Department</option>
+                        <option value="Computer Science and Engineering(CSE)">Computer Science and Engineering(CSE)</option>
+                        <option value="Electrical and Electronic Engineering(EEE)">Electrical and Electronic Engineering(EEE)
+                        </option>
+                        <option value="Industrial and Production Engineering(IPE)">Industrial and Production Engineering(IPE)
+                        </option>
+                        <option value="Petroleum and Mining Engineering(PME)">Petroleum and Mining Engineering(PME)</option>
+                        <option value="Chemical Engineering(ChE)">Chemical Engineering(ChE)</option>
+                        <option value="Biomedical Engineering(BE)">Biomedical Engineering(BE)</option>
+                        <option value="Textile Engineering(TE)">Textile Engineering(TE)</option>
+                        <option value="Agro Product Processing Technology">Agro Product Processing Technology</option>
+                        <option value="Climate and Disaster Management">Climate and Disaster Management</option>
+                        <option value="Environmental Science and Technology">Environmental Science and Technology</option>
+                        <option value="Nutrition and Food Technology">Nutrition and Food Technology</option>
+                        <option value="Fisheries and Marine Bioscience">Fisheries and Marine Bioscience</option>
+                        <option value="Genetic Engineering and Biotechnology">Genetic Engineering and Biotechnology</option>
+                        <option value="Microbiology">Microbiology</option>
+                        <option value="Pharmacy">Pharmacy</option>
+                        <option value="Nursing and Health Science">Nursing and Health Science</option>
+                        <option value="Physical Education and Sports Science">Physical Education and Sports Science</option>
+                        <option value="Physiotherapy and Rehabilitation">Physiotherapy and Rehabilitation</option>
+                        <option value="English">English</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Accounting and Information Systems">Accounting and Information Systems</option>
+                        <option value="Finance and Banking">Finance and Banking</option>
+                        <option value="Management">Management</option>
+                        <option value="Marketing">Marketing</option>
+                        <!-- Add more departments here -->
+                    </select></td>
+                </tr>
+                <tr class="form-group hidden" id="session">
+                    <th for="year">Session</th>
+                    <td><input type="text" class="form-control" name="session" value="{{ old('session') }}"></td>
+                </tr>
+                <tr class="form-group ">
+                    <th for="gender">Gender:</th>
+                   <td> <select required class="form-control" id="gender" name="gender">
+                        <option selected value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select></td>
+                </tr>
+                <tr class="form-group">
+                    <th for="profile-image">Profile Image</th>
+                    <td><input required type="file" class="form-control" id="profile" name="profile">
+                </tr>
+                <tr class="form-group">
+                    <th for="profile-image">NID Image copy</th>
+                    <td><input required type="file" class="form-control" id="nid" name="nid">
+                </tr>
+                <tr class="form-group">
+                    <th for="profile-image">Signature</th>
+                    <td><input required type="file" class="form-control" id="siganture" name="siganture">
+                </tr>
+
+
+                <tr class="d-flex justify-content-center">
                     <td colspan="2">
-                        <input type="hidden" name="type" value="{{ Auth::user()->type }}">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </td>
+                    <button type="submit" class="btn btn-success btn-lg gradient-custom-4 text-body w-100">Submit</button></td>
                 </tr>
-                </tbody>
-            </table>
+            </tbody>
+        </table>
         </form>
-        </div>
     </div>
+</div>
 
 
 
 @section('scripts')
 <!-- Page level plugins -->
-<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></td></script>
+<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></td></script>
+
+
 
 <!-- Page level custom scripts -->
-<script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+<script src="{{ asset('js/demo/datatables-demo.js') }}"></td></script>
 <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 @endsection
 @endsection

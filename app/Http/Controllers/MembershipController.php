@@ -39,13 +39,12 @@ class MembershipController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'dept' => 'required',
-            'photo' => 'required',
-            'type' => 'required',
+            'name' => 'required',
+            'profile' => 'required',
+            'nid' => 'required',
             'gender' => 'required',
-            'nidno' => 'required',
-            'ini_weight' => 'required',
-            'ini_bodytype' => 'required',
+            'siganture' => 'required',
+            'category' => 'required|not_in:0',
         ]);
         if ($request->type == 'student') {
             $request->validate([
@@ -60,26 +59,70 @@ class MembershipController extends Controller
             ]);
         }
         $data = new Member();
-        $user_id = Auth::user()->id;
+        if ($request->category == '1') {
+            $type = 'student';
+            $request->validate([
+                'fname' => 'required',
+                'mname' => 'required',
+                'rollno' => 'required',
+                'dept' => 'required',
+                'session' => 'required',
+            ]);
+        } elseif ($request->category == '2') {
+            $type = 'staff';
+            $request->validate([
+                'podobi' => 'required',
+                'deptoffice' => 'required',
+            ]);
+        } elseif ($request->category == '3') {
+            $type = 'stafffamily';
+            $request->validate([
+                'staffRelationName' => 'required',
+                'staffRelation' => 'required',
+                'staffRelationTitle' => 'required',
+            ]);
+        } elseif ($request->category == '4') {
+            $type = 'outsider';
+            $request->validate([
+                'fname' => 'required',
+                'pradd' => 'required',
+                'paadd' => 'required',
+                'nameofinst' => 'required',
+                'podobi' => 'required',
+            ]);
+        }
+        // New Added
+        $arrayData = [];
+        $arrayData['gender'] = $request->gender;
+        $arrayData['dept'] = $request->dept;
+        $arrayData['session'] = $request->session;
+        $arrayData['rollno'] = $request->rollno;
+        $arrayData['fname'] = $request->fname;
+        $arrayData['mname'] = $request->mname;
+        $arrayData['type'] = $type;
+        $arrayData['podobi'] = $request->podobi;
+        $arrayData['deptoffice'] = $request->deptoffice;
+        $arrayData['staffRelationName'] = $request->staffRelationName;
+        $arrayData['staffRelation'] = $request->staffRelation;
+        $arrayData['staffRelationTitle'] = $request->staffRelationTitle;
+        $arrayData['pradd'] = $request->pradd;
+        $arrayData['paadd'] = $request->paadd;
+        $arrayData['nameofinst'] = $request->nameofinst;
+        if ($request->hasFile('profile')) {
+            $arrayData['profile'] = $request->file('profile')->store('membership', 'public');
+        }
+        if ($request->hasFile('nid')) {
+            $arrayData['nid'] = $request->file('nid')->store('membership', 'public');
+        }
+        if ($request->hasFile('siganture')) {
+            $arrayData['siganture'] = $request->file('siganture')->store('membership', 'public');
+        }
 
-        $data->user_id = $user_id;
-        $data->dept = $request->dept;
-        if (Auth::user()->type == 'student') {
-            $data->session = $request->session;
-            $data->rollno = $request->rollno;
-            $data->fname = $request->fname;
-            $data->mname = $request->mname;
-        }
-        if ($request->hasFile('photo')) {
-            $data->photo = $request->file('photo')->store('membership', 'public');
-        }
-        $data->gender = $request->gender;
-        $data->nid = $request->nidno;
-        $data->amount = 0;
-        $data->plan = $request->plan;
+        $data->membership = json_encode($arrayData);
         $data->status = 0;
-        $data->ini_weight = $request->ini_weight;
-        $data->ini_bodytype = $request->ini_bodytype;
+        $data->user_id = Auth::user()->id;
+        $data->save();
+        // Membership Saved
         $data->save();
 
         return redirect()->route('user.profile.view')->with('success', 'Membership Successful!');
