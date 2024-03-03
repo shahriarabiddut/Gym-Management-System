@@ -80,7 +80,7 @@
                     </p>
                     @endif
                     <hr>
-                    <a class="btn btn-block btn-social" href="/auth/google/redirect"><img width="100%" height="75px" src="{{ asset('images/loginwithgoogle.png') }}" alt="">
+                    <a class="btn btn-block btn-social" href="{{ URL::to('/auth/google/redirect') }}"><img width="100%" height="75px" src="{{ asset('images/loginwithgoogle.png') }}" alt="">
                     </a>
                     <hr>
                     @if (Route::has('register'))

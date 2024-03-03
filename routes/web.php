@@ -46,6 +46,7 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::resource('support', SupportController::class);
     //Enroll Routes
     Route::get('enroll/{id}/delete', [MembershipController::class, 'destroy'])->name('enroll.destroy');
+    Route::get('enrollprint/', [MembershipController::class, 'generatePDF'])->name('enroll.print');
     Route::resource('enroll', MembershipController::class);
 });
 

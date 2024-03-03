@@ -110,17 +110,17 @@
             </div>
             <div class="works">
                 <div class="single-work">
-                    <img src="./image/r1.jpg" alt="">
+                    <img src="/image/r1.jpg" alt="">
                     <h3>Sarah Thompson </h3>
                     <p> The personalized workout plans have transformed my fitness journey. Highly recommend!</p>
                 </div>
                 <div class="single-work">
-                    <img src="./image/r2.jpg" alt="">
+                    <img src="/image/r2.jpg" alt="">
                     <h3>Alex Rodriguez </h3>
                     <p>Great Variety of Classes and Atmosphere! I love the diverse range of fitness classes offered at FlexFit Gym.</p>
                 </div>
                 <div class="single-work">
-                    <img src="./image/r3.jpg" alt="">
+                    <img src="/image/r3.jpg" alt="">
                     <h3>Emily Johnson </h3>
                     <p>Results-Driven and Friendly Environment! Joining PowerPulse Fitness was one of the best decisions I made.</p>
                 </div>

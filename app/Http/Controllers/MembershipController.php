@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Member;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,34 +38,45 @@ class MembershipController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request->dept);
-        //
         $request->validate([
             'dept' => 'required',
+            'photo' => 'required',
+            'type' => 'required',
             'gender' => 'required',
-            'services' => 'required',
-            'plan' => 'required',
-            'p_year' => 'required',
+            'nidno' => 'required',
             'ini_weight' => 'required',
             'ini_bodytype' => 'required',
         ]);
+        if ($request->type == 'student') {
+            $request->validate([
+                'session' => 'required',
+                'rollno' => 'required',
+                'fname' => 'required',
+                'mname' => 'required',
+            ]);
+        } elseif ($request->type == 'teacher') {
+            $request->validate([
+                'dept' => 'required',
+            ]);
+        }
         $data = new Member();
         $user_id = Auth::user()->id;
-        $currentDate = Carbon::now(); // get current date and time
-        $currentDate = $currentDate->setTimezone('GMT+6')->format('Y-m-d'); // 2023-03-17
 
         $data->user_id = $user_id;
         $data->dept = $request->dept;
         if (Auth::user()->type == 'student') {
             $data->session = $request->session;
+            $data->rollno = $request->rollno;
+            $data->fname = $request->fname;
+            $data->mname = $request->mname;
         }
-        $data->dor = $currentDate;
+        if ($request->hasFile('photo')) {
+            $data->photo = $request->file('photo')->store('membership', 'public');
+        }
         $data->gender = $request->gender;
-        $data->services = $request->services;
+        $data->nid = $request->nidno;
         $data->amount = 0;
         $data->plan = $request->plan;
-        $data->p_year = $request->p_year;
         $data->status = 0;
         $data->ini_weight = $request->ini_weight;
         $data->ini_bodytype = $request->ini_bodytype;
@@ -114,5 +126,26 @@ class MembershipController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function generatePDF()
+    {
+        // $mpdf = new \Mpdf\Mpdf(([
+        //     'default_font_size' => 12,
+        //     'default_font' => 'nikosh'
+        // ]));
+        // $html = view('profile.membership.rr')->render();
+        // $mpdf->WriteHTML($html);
+        // return $mpdf->output(Auth::user()->rollno . ' - membership.pdf', 'D');
+        $mpdf = new \Mpdf\Mpdf(([
+            'default_font_size' => 12,
+            'default_font' => 'nikosh'
+        ]));
+        $html = view('profile.membership.rr')->render();
+        $mpdf->WriteHTML($html);
+        return $mpdf->output(Auth::user()->name . ' - membership.pdf', 'D');
+    }
+    public function generatePDF2()
+    {
+        return view('profile.membership.rr');
     }
 }

@@ -29,26 +29,20 @@
              <h5>Membership</h5>
            </div>
            <div class="widget-content p-2">
+            @php $membership = json_decode(Auth::user()->member->membership, true);$member = Auth::user()->member; @endphp
             @if ($membership==null)
             <a href="{{ route('user.enroll.create') }}"><button>Enroll For Membership</button></a>
             @else
              <table class='table table-striped table-bordered'>
              <tbody>
-             <tr><td>Department </td><td>{{ $membership->dept }}</td> </tr>
+             <tr><td>Department </td><td>{{ $membership['dept'] }}</td> </tr>
              @if (Auth::user()->type == 'student')
-             <tr><td>Session </td><td>{{ $membership->session }}</td> </tr>
+             <tr><td>Session </td><td>{{ $membership['session'] }}</td> </tr>
              @endif
-             <tr><td>Registration Date </td><td>{{ $membership->dor }}</td> </tr>
-             <tr><td>Gender </td><td>{{ $membership->gender }}</td> </tr>
-             <tr><td>Services </td><td>{{ $membership->services }}</td> </tr>
-             <tr><td>Plan </td><td>{{ $membership->plan }} Months</td> </tr>
-             <tr><td>Plan Year</td><td>{{ $membership->p_year }}</td> </tr>
-             <tr><td>Initial Weight </td><td>{{ $membership->ini_weight }} Kg</td> </tr>
-             <tr><td>Current Weight </td><td>{{ $membership->curr_weight }} Kg</td> </tr>
-             <tr><td>Initial BodyType </td><td>{{ $membership->ini_bodytype }}</td> </tr>
-             <tr><td>Current BodyType </td><td>{{ $membership->curr_bodytype }}</td> </tr>
+             <tr><td>Registration Date </td><td>{{ $member->created_at->format('j F,Y') }}</td> </tr>
+             <tr><td>Gender </td><td style="text-transform: capitalize; ">{{ $membership['gender'] }}</td> </tr>
              <tr><td>Membership Status </td><td> 
-                @switch($membership->status)
+                @switch($member->status)
                     @case(0)
                         Under Review
                         @break
@@ -59,7 +53,10 @@
                         Disabled
                 @endswitch
             </td> </tr>
-             <tr><td colspan="2"><a href="{{ route('user.enroll.edit',Auth::user()->id) }}"><button>Update Current Data</button></a></td></tr>
+             <tr>
+              <td><a href="{{ route('user.enroll.edit',Auth::user()->id) }}"><button>Update Current Data</button></a></td>
+              <td><a href="{{ route('user.enroll.print') }}"><button>Download Form</button></a></td>
+            </tr>
            </tbody>
              </table>
              @endif

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('category');
             $table->string('subject');
-            $table->string('message');
+            $table->longText('message');
             $table->integer('repliedby')->nullable();
             $table->string('reply')->nullable();
+            $table->integer('hall_id')->references('id')->on('halls');
             $table->timestamps();
         });
     }

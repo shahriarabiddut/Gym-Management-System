@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title> @yield('title') | @isset($SiteOption)
-        {{ $SiteOption[0]->value }}
-    @endisset </title>
+    <title> @yield('title') | @isset($SiteOption) {{ $SiteOption[0]->value }} @endisset </title>
     <!-- Custom fonts for this template-->
     <link href="{{  asset('vendor/fontawesome-free/css/all.min.css')  }}" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -27,4 +25,13 @@
     <!-- Scripts -->
     <script src="{{ asset('js/jquery.slim.min.js') }}"></script>
     <script src="{{ asset('js/select2.full.min.js') }}"></script>
+    <style>
+        .bg-danger{
+        padding: 1%;
+        background-color: red;
+        color: white;
+        font-size: 16px;
+        font-weight: lighter;
+        }
+    </style>
     </head>
