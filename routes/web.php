@@ -28,6 +28,7 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 Route::post('/contact/store', [HomeController::class, 'contactStore'])->name('contact.store');
+Route::get('/api/data/{id}', [HomeController::class, 'apiData'])->name('api.data');
 //oAuth2
 Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
