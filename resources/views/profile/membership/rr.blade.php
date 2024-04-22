@@ -119,7 +119,7 @@ body {
             <td>{{  $membership['gender']}}</td>
         </tr>
         <tr>
-            <th >Mobile </th>
+            <th >মোবাইল </th>
             <td>{{  Auth::user()->mobile }}</td>
         </tr>
         </tbody>
