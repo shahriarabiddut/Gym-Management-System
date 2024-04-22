@@ -161,8 +161,10 @@ class HomeController extends Controller
             } else {
                 foreach ($data as $value) {
                     if ($value['roll'] == $roll) {
+                        return $value;
+                        // dd($value);
                         foreach ($value as $Mvalue) {
-                            echo $Mvalue . '<br>';
+                            // echo $Mvalue . '<br>';
                         }
                     }
                 }

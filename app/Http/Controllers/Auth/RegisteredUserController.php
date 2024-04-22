@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +22,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('auth.register3');
     }
 
     /**
@@ -45,11 +46,11 @@ class RegisteredUserController extends Controller
         if ($request->category == '1') {
             $type = 'student';
             $request->validate([
-                'fname' => 'required',
-                'mname' => 'required',
                 'rollno' => 'required',
-                'dept' => 'required',
-                'session' => 'required',
+                // 'fname' => 'required',
+                // 'mname' => 'required',
+                // 'dept' => 'required',
+                // 'session' => 'required',
             ]);
         } elseif ($request->category == '2') {
             $type = 'staff';
@@ -78,12 +79,22 @@ class RegisteredUserController extends Controller
         $data = new Member();
         // New Added
         $arrayData = [];
-        $arrayData['gender'] = $request->gender;
-        $arrayData['dept'] = $request->dept;
-        $arrayData['session'] = $request->session;
         $arrayData['rollno'] = $request->rollno;
-        $arrayData['fname'] = $request->fname;
-        $arrayData['mname'] = $request->mname;
+        $Home = new HomeController();
+        $UserData = $Home->apiData($request->rollno);
+        // dd($UserData);
+        if ($request->category == '1') {
+            $arrayData['dept'] = $UserData['dept'];
+            $arrayData['session'] = $UserData['admissionSession'];
+            $arrayData['fname'] = $UserData['fName'];
+            $arrayData['mname'] = $UserData['mName'];
+        } else {
+            $arrayData['dept'] = $request->dept;
+            $arrayData['session'] = $request->session;
+            $arrayData['fname'] = $request->fname;
+            $arrayData['mname'] = $request->mname;
+        }
+        $arrayData['gender'] = $request->gender;
         $arrayData['type'] = $type;
         $arrayData['podobi'] = $request->podobi;
         $arrayData['deptoffice'] = $request->deptoffice;

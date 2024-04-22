@@ -41,32 +41,32 @@ body {
     <table class="table table-bordered" width="100%">
         <tbody>
         <tr>
-            <th width="50%">Photo </th>
+            <th width="50%">ছবি </th>
             <td width="50%"><img width="150px" src="{{ asset('storage/app/public/'. $membership['profile']) }}" alt=""> </td>
         </tr>
         <tr>
-            <th>Name </th>
+            <th>নাম </th>
             <td>{{ Auth::user()->name }}</td>
         </tr>
         @if (Auth::user()->type == 'student')
         <tr>
-            <th>Department </th>
+            <th>বিভাগ </th>
             <td>{{  $membership['dept'] }}</td>
         </tr>
         <tr>
-            <th>Father's Name </th>
+            <th>পিতার নাম </th>
             <td>{{  $membership['fname'] }}</td>
         </tr>
         <tr>
-            <th>Mother's Name </th>
+            <th>মাতার নাম </th>
             <td>{{  $membership['mname'] }}</td>
         </tr>
         <tr>
-            <th>Session </th>
+            <th>সেশন </th>
             <td>{{  $membership['session'] }}</td>
         </tr>
         <tr>
-            <th >Roll No </th>
+            <th >রোল নং </th>
             <td>{{  $membership['rollno'] }}</td>
         </tr>
         @elseif (Auth::user()->type == 'staff')
