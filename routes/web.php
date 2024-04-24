@@ -49,6 +49,10 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::get('enroll/{id}/delete', [MembershipController::class, 'destroy'])->name('enroll.destroy');
     Route::get('enrollprint/', [MembershipController::class, 'generatePDF'])->name('enroll.print');
     Route::resource('enroll', MembershipController::class);
+
+    // Select Plan
+    Route::get('/plan', [ProfileController::class, 'plan'])->name('plan.plan');
+    Route::put('/plan/edit', [ProfileController::class, 'planupdate'])->name('plan.update');
 });
 
 require __DIR__ . '/auth.php';
