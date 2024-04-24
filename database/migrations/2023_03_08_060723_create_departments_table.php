@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('token_print_queues', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->longText('data');
-            $table->integer('token_id');
-            $table->integer('order_id');
-            $table->integer('rollno');
-            $table->integer('hall_id')->references('id')->on('halls');
+            $table->string('title');
+            $table->string('detail');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('token_print_queues');
+        Schema::dropIfExists('departments');
     }
 };

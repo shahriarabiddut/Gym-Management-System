@@ -72,7 +72,7 @@
               <option value="3">Teacher/Officer/Staff(family)</option>
               <option value="4">Outside/Other</option>
           </select>
-          <div class="form-group">
+          <div class="form-group" id="name">
               <label for="name">Name</label>
               <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}">
           </div>
@@ -234,6 +234,7 @@
         <script>
           function toggleFields() {
               let optionSelect = document.getElementById("optionSelect").value;
+              let name = document.getElementById("name");
               let fname = document.getElementById("fname");
               let mname = document.getElementById("mname");
               let rollno = document.getElementById("rollno");
@@ -255,6 +256,7 @@
                   // session.classList.remove("hidden");
                   //hide
                   podobi.classList.add("hidden");
+                  name.classList.add("hidden");
                   deptoffice.classList.add("hidden");
                   staffRelationName.classList.add("hidden");
                   staffRelation.classList.add("hidden");

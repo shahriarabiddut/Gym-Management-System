@@ -17,6 +17,16 @@
              <tr><td>Address </td><td>{{ Auth::user()->address }}</td> </tr>
              <tr><td>Email </td><td>{{ Auth::user()->email }}</td> </tr>
              <tr><td>Mobile </td><td>{{ Auth::user()->mobile }}</td> </tr>
+             @if ($membership!=null)
+             @php $membership = json_decode(Auth::user()->member->membership, true);$member = Auth::user()->member; @endphp
+             <tr><td>Department </td><td>{{ $membership['dept'] }}</td> </tr>
+             @if (Auth::user()->type == 'student')
+              <tr><td>Session </td><td>{{ $membership['session'] }}</td> </tr>
+              <tr><td>Roll No </td><td>{{ $membership['rollno'] }}</td> </tr>
+              <tr><td>Father's Name </td><td>{{ $membership['fname'] }}</td> </tr>
+              <tr><td>Mother's Name </td><td>{{ $membership['mname'] }}</td> </tr>
+             @endif
+             @endif
             <tr><td colspan="2"><a href="{{ route('user.profile.edit') }}"><button>Edit Profile</button></a></td></tr>
            </tbody>
              </table>
@@ -32,7 +42,6 @@
              @if ($membership==null)
              <a href="{{ route('user.enroll.create') }}"><button>Enroll For Membership</button></a>
              @else
-             @php $membership = json_decode(Auth::user()->member->membership, true);$member = Auth::user()->member; @endphp
              <table class='table table-striped table-bordered'>
              <tbody>
              <tr><td>Department </td><td>{{ $membership['dept'] }}</td> </tr>
@@ -44,6 +53,9 @@
              <tr><td>Membership Status </td><td> 
                 @switch($member->status)
                     @case(0)
+                      Select Plan
+                      @break
+                    @case(2)
                         Under Review
                         @break
                     @case(1)
@@ -55,7 +67,13 @@
             </td> </tr>
              <tr>
               <td><a href="{{ route('user.enroll.edit',Auth::user()->id) }}"><button>Update Current Data</button></a></td>
-              <td><a href="{{ route('user.enroll.print') }}"><button>Download Form</button></a></td>
+              <td>
+                @if ($member->status == 0)
+                <a href="{{ route('user.enroll.print') }}"><button>Select Plan</button></a>
+                @else
+                <a href="{{ route('user.enroll.print') }}"><button>Download Form</button></a>
+                @endif
+              </td>
             </tr>
            </tbody>
              </table>

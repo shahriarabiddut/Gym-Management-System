@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('staffs', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('type');
-            $table->string('photo')->nullable();
+            $table->string('password')->nullable();
+            $table->integer('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->text('bio')->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone')->nullable();
-            $table->integer('hall_id')->references('id')->on('halls')->nullable();
+            $table->string('is_admin')->nullable();
+            $table->string('status')->nullable();
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
+            $table->string('provider_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('staffs');
     }
 };

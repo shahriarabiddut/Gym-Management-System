@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\StaffDepartmentController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\GymEquipmentController;
 use App\Http\Controllers\Admin\MembershipController;
+use App\Http\Controllers\Admin\PlanController;
 
 //Admin
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
@@ -44,8 +45,8 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('user', UserController::class);
 
     // Department Routes
-    Route::get('department/{id}/delete', [StaffDepartmentController::class, 'destroy']);
-    Route::resource('department', StaffDepartmentController::class);
+    Route::get('plan/{id}/delete', [PlanController::class, 'destroy']);
+    Route::resource('plan', PlanController::class);
 
     // Staff 
 

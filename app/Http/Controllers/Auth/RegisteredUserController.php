@@ -122,6 +122,7 @@ class RegisteredUserController extends Controller
             'type' => $type,
             'email' => $request->email,
             'mobile' => $request->mobile,
+            'data' => $UserData,
             'password' => Hash::make($request->password),
         ]);
         event(new Registered($user));

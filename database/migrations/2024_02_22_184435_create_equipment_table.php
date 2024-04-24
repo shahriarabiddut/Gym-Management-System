@@ -11,10 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hall_options', function (Blueprint $table) {
+        Schema::create('equipment', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('value');
+            $table->integer('amount');
+            $table->string('quantity');
+            $table->string('vendor');
+            $table->string('description');
+            $table->string('address');
+            $table->string('contact');
+            $table->date('date');
+            $table->integer('addedby');
             $table->timestamps();
         });
     }
@@ -24,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hall_options');
+        Schema::dropIfExists('equipment');
     }
 };

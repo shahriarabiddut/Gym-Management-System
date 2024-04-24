@@ -2,25 +2,33 @@
   <ul>
     <li class=""><a href="{{route('admin.dashboard')}}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a> </li>
     {{-- 1 --}}
-    <li class="submenu "> <a href="#"><i class="fas fa-users"></i> <span>Manage Members</span> <span class="label label-important"> </span></a>
-      <ul>
+    <li class="dropdown "> <a href="{{ route('admin.user.index') }}"><i class="fas fa-users"></i> <span>Manage Members</span> <span class="label label-important"> </span></a>
+     <ul class="dropdown-menu">
         <li class=""><a href="{{ route('admin.user.index') }}"><i class="fas fa-arrow-right"></i> List All Members</a></li>
         <li class=""><a href="{{ route('admin.user.create') }}"><i class="fas fa-arrow-right"></i> Add New User</a></li>
       </ul>
     </li>
     {{-- 2 --}}
-    <li class="submenu"> <a href="#"><i class="fas fa-dumbbell"></i> <span>Gym Equipment</span> <span class="label label-important"> </span></a>
-      <ul>
+    <li class="submenu"> <a href="{{ route('admin.equipment.index') }}"><i class="fas fa-dumbbell"></i> <span>Gym Equipment</span> <span class="label label-important"> </span></a>
+     <ul class="dropdown-menu">
           <li class=""><a href="{{ route('admin.equipment.index') }}"><i class="fas fa-arrow-right"></i> List Gym Equipment</a></li>
-          <li class=""><a href="{{ route('admin.equipment.index') }}"><i class="fas fa-arrow-right"></i> Add Equipment</a></li>
+          <li class=""><a href="{{ route('admin.equipment.create') }}"><i class="fas fa-arrow-right"></i> Add Equipment</a></li>
         </ul>
       </li>
       {{-- 3 --}}
-    <li class="submenu"> <a href="#"><i class="fas fa-users"></i> <span>Manage Contacts</span> <span class="label label-important"> </span></a>
-      <ul>
+    <li class="submenu"> <a href="{{ route('admin.contact.index') }}"><i class="fas fa-message"></i> <span>Manage Contacts</span> <span class="label label-important"> </span></a>
+     <ul class="dropdown-menu">
         <li class=""><a href="{{ route('admin.contact.index') }}"><i class="fas fa-arrow-right"></i> Contact Message</a></li>
+      </ul>
     </li>
     {{-- 4 --}}
+    <li class="dropdown "> <a href="{{ route('admin.plan.index') }}"><i class="fas fa-table"></i> <span>Manage Plans</span> <span class="label label-important"> </span></a>
+      <ul class="dropdown-menu">
+         <li class=""><a href="{{ route('admin.plan.index') }}"><i class="fas fa-arrow-right"></i> List All Plans</a></li>
+         <li class=""><a href="{{ route('admin.plan.create') }}"><i class="fas fa-arrow-right"></i> Add New Plan</a></li>
+       </ul>
+     </li>
+    {{-- 5 --}}
     
     {{-- 
     <li class=""> <a href=""><i class="fas fa-calendar-alt"></i> <span>Attendance</span></a>
@@ -44,8 +52,5 @@
       </ul>
     </li> --}}
 
-
-
-    <!-- Visit codeastro.com for more projects -->
   </ul>
 </div>
