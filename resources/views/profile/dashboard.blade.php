@@ -56,6 +56,9 @@
                       Select Plan
                       @break
                     @case(2)
+                        Pay to Active Membership
+                        @break
+                    @case(3)
                         Under Review
                         @break
                     @case(1)
@@ -65,11 +68,18 @@
                         Disabled
                 @endswitch
             </td> </tr>
+            @if (Auth::user()->member->plan != null)
+             <tr><td>Selected Plan </td><td>{{ Auth::user()->member->plans->name }}</td> </tr>
+             @endif
              <tr>
-              <td><a href="{{ route('user.enroll.edit',Auth::user()->id) }}"><button>Update Current Data</button></a></td>
+              <td><a href="{{ route('user.enroll.edit',Auth::user()->id) }}"><button>Update Weight</button></a>
+                @if ($member->status != 0)
+                <a href="{{ route('user.plan.plan') }}"><button>Edit Plan</button></a>
+                @endif
+              </td>
               <td>
                 @if ($member->status == 0)
-                <a href="{{ route('user.enroll.print') }}"><button>Select Plan</button></a>
+                <a href="{{ route('user.plan.plan') }}"><button>Select Plan</button></a>
                 @else
                 <a href="{{ route('user.enroll.print') }}"><button>Download Form</button></a>
                 @endif

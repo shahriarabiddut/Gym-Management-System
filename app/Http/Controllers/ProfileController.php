@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\member;
 use App\Models\User;
+use App\Models\member;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
@@ -35,7 +36,26 @@ class ProfileController extends Controller
             'user' => $request->user(),
         ]);
     }
-
+    public function editpassword()
+    {
+        return view('profile.partials.editPassword');
+    }
+    public function updatepassword(Request $request)
+    {
+        $data = User::find(Auth::user()->id);
+        $request->validate([
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required',
+            'opassword' => 'required',
+        ]);
+        if (Hash::check($request->opassword, Auth::user()->password)) {
+            $data->password = Hash::make($request->password);
+            $data->save();
+            return Redirect::route('user.profile.view')->with('success', 'Password Updated');
+        } else {
+            return redirect()->back()->with('danger', "Password didn't match");
+        }
+    }
     /**
      * Update the user's profile information.
      */

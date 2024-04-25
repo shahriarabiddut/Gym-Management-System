@@ -72,9 +72,9 @@
               <option value="3">Teacher/Officer/Staff(family)</option>
               <option value="4">Outside/Other</option>
           </select>
-          <div class="form-group" id="name">
+          <div class="form-group hidden" id="name">
               <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}">
+              <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
           </div>
           <div class="form-group hidden" id="fname">
             <label for="father-name">Father's Name</label>
@@ -249,11 +249,7 @@
               let paadd = document.getElementById("paadd");
               let nameofinst = document.getElementById("nameofinst");
               if (optionSelect === "1") {
-                 // fname.classList.remove("hidden");
-                 // mname.classList.remove("hidden");
                   rollno.classList.remove("hidden");
-                  // dept.classList.remove("hidden");
-                  // session.classList.remove("hidden");
                   //hide
                   podobi.classList.add("hidden");
                   name.classList.add("hidden");
@@ -267,6 +263,7 @@
               } else if (optionSelect === "2") {
                   podobi.classList.remove("hidden");
                   deptoffice.classList.remove("hidden");
+                  name.classList.remove("hidden");
                   //hide
                   fname.classList.add("hidden");
                   mname.classList.add("hidden");
@@ -283,6 +280,7 @@
                   staffRelationName.classList.remove("hidden");
                   staffRelation.classList.remove("hidden");
                   staffRelationTitle.classList.remove("hidden");
+                  name.classList.remove("hidden");
                   //hide
                   podobi.classList.add("hidden");
                   deptoffice.classList.add("hidden");
@@ -296,6 +294,7 @@
                   nameofinst.classList.add("hidden");
               }else if (optionSelect === "4") {
                   fname.classList.remove("hidden");
+                  name.classList.remove("hidden");
                   pradd.classList.remove("hidden");
                   paadd.classList.remove("hidden");
                   nameofinst.classList.remove("hidden");

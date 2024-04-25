@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Plan;
 use App\Models\Member;
+use App\Models\PlanMember;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -135,7 +137,38 @@ class MembershipController extends Controller
     {
         //
     }
+    public function selectPlan()
+    {
+        //
+        $data = Member::all()->where('user_id', '=', Auth::user()->id)->first();
+        $plans = Plan::all();
+        return view('profile.membership.selectPlan', ['data' => $data, 'plans' => $plans]);
+    }
+    public function planupdate(Request $request)
+    {
+        $request->validate([
+            'plan' => 'required',
+        ]);
+        //
+        $dataPlan = PlanMember::all()->where('user_id', '=', Auth::user()->id)->first();
+        $dataMember = PlanMember::all()->where('user_id', '=', Auth::user()->id)->first();
+        if ($dataPlan == null) {
+            $data = new PlanMember();
+        } else {
+            $data = PlanMember::all()->where('user_id', '=',  Auth::user()->id)->first();
+            $dataMember = Member::all()->where('user_id', '=',  Auth::user()->id)->first();
+        }
+        $data->user_id = Auth::user()->id;
+        $data->plan_id = $request->plan;
+        $data->status = 0;
+        $data->save();
+        //
+        $dataMember->plan = $data->plan_id;
+        $dataMember->status = 2;
+        $dataMember->save();
 
+        return redirect()->route('user.profile.view')->with('success', ' Plan Data has been selected Successfully!');
+    }
     /**
      * Show the form for editing the specified resource.
      */

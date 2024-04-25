@@ -32,8 +32,9 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
+        $UserData = 0;
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'gender' => ['required', 'string', 'max:255'],
             'profile' => ['required'],
             'nid' => ['required'],
@@ -43,24 +44,26 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'regex:/(.+)@(.+)\.(.+)/i', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $name = $request->name;
         if ($request->category == '1') {
+            $Home = new HomeController();
+            $UserData = $Home->apiData($request->rollno);
             $type = 'student';
+            $name = $UserData['name'];
             $request->validate([
                 'rollno' => 'required',
-                // 'fname' => 'required',
-                // 'mname' => 'required',
-                // 'dept' => 'required',
-                // 'session' => 'required',
             ]);
         } elseif ($request->category == '2') {
             $type = 'staff';
             $request->validate([
+                'name' => ['required', 'string', 'max:255'],
                 'podobi' => 'required',
                 'deptoffice' => 'required',
             ]);
         } elseif ($request->category == '3') {
             $type = 'stafffamily';
             $request->validate([
+                'name' => ['required', 'string', 'max:255'],
                 'staffRelationName' => 'required',
                 'staffRelation' => 'required',
                 'staffRelationTitle' => 'required',
@@ -68,6 +71,7 @@ class RegisteredUserController extends Controller
         } elseif ($request->category == '4') {
             $type = 'outsider';
             $request->validate([
+                'name' => ['required', 'string', 'max:255'],
                 'fname' => 'required',
                 'pradd' => 'required',
                 'paadd' => 'required',
@@ -80,8 +84,6 @@ class RegisteredUserController extends Controller
         // New Added
         $arrayData = [];
         $arrayData['rollno'] = $request->rollno;
-        $Home = new HomeController();
-        $UserData = $Home->apiData($request->rollno);
         // dd($UserData);
         if ($request->category == '1') {
             $arrayData['dept'] = $UserData['dept'];
@@ -118,16 +120,16 @@ class RegisteredUserController extends Controller
         $data->status = 0;
         //
         $user = User::create([
-            'name' => $request->name,
+            'name' => $name,
             'type' => $type,
             'email' => $request->email,
             'mobile' => $request->mobile,
-            'data' => $UserData,
             'password' => Hash::make($request->password),
         ]);
         event(new Registered($user));
         //
         $data->user_id = $user->id;
+        $data->extra = json_encode($UserData);
         $data->save();
         // Membership Saved
         Auth::login($user);

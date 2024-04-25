@@ -40,6 +40,8 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::get('/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/edit', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/editpassword', [ProfileController::class, 'editpassword'])->name('profile.editpassword');
+    Route::put('/profile/updatepassword', [ProfileController::class, 'updatepassword'])->name('profile.passwordupdate');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //Support Routes
@@ -51,8 +53,8 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::resource('enroll', MembershipController::class);
 
     // Select Plan
-    Route::get('/plan', [ProfileController::class, 'plan'])->name('plan.plan');
-    Route::put('/plan/edit', [ProfileController::class, 'planupdate'])->name('plan.update');
+    Route::get('/plan', [MembershipController::class, 'selectPlan'])->name('plan.plan');
+    Route::put('/plan/edit', [MembershipController::class, 'planupdate'])->name('plan.update');
 });
 
 require __DIR__ . '/auth.php';
