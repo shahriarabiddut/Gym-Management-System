@@ -8,12 +8,19 @@
     <meta name="author" content="">
     <title> @yield('title') | @isset($SiteOption) {{ $SiteOption[0]->value }} @endisset </title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{ asset('css/styles.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/bootstrap-responsive.min.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/fullcalendar.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/matrix-style.css')}}" />
     <link rel="stylesheet" href="{{ asset('css/matrix-media.css')}}" />
     <link href="{{ asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
+    <link href="{{ asset('font-awesome/css/font-awesome4.css')}}" rel="stylesheet" />
+    <link href="{{ asset('font-awesome/css/font-awesome4.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/jquery.gritter.css')}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="{{ asset('font-awesome/css/all.css') }}" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="{{ asset('css/jquery.gritter.css') }}" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     </head>
 <body>

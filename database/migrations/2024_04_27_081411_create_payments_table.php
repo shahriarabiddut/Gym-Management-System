@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plan_members', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('plan_id')->references('id')->on('plans')->onDelete('cascade');
-            $table->integer('status');
+            $table->integer('plan_member_id')->nullable();
             $table->date('validity');
+            $table->integer('amount');
+            $table->integer('status');
+            $table->string('method')->nullable();
+            $table->integer('accepted')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plan_members');
+        Schema::dropIfExists('payments');
     }
 };

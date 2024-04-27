@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Plan;
 use App\Models\Member;
+use App\Models\Payment;
 use App\Models\PlanMember;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -140,35 +141,62 @@ class MembershipController extends Controller
     public function selectPlan()
     {
         //
+        $dataPlanMember = PlanMember::all()->where('user_id', '=', Auth::user()->id)->first();
+        if ($dataPlanMember != null) {
+            $currentDate = Carbon::now();
+            $validity = Carbon::parse($dataPlanMember->validity);
+            if ($currentDate <= $validity) {
+                if ($dataPlanMember->status == 0) {
+                    return redirect()->route('user.dashboard')->with('danger', ' Plese Pay for Existing Plan!');
+                } else {
+                    return redirect()->route('user.dashboard')->with('danger', ' Existing Plan is not expired yet!');
+                }
+            }
+        }
         $data = Member::all()->where('user_id', '=', Auth::user()->id)->first();
         $plans = Plan::all();
         return view('profile.membership.selectPlan', ['data' => $data, 'plans' => $plans]);
     }
     public function planupdate(Request $request)
     {
+        $plan = Plan::find($request->plan);
         $request->validate([
             'plan' => 'required',
         ]);
         //
         $dataPlan = PlanMember::all()->where('user_id', '=', Auth::user()->id)->first();
-        $dataMember = PlanMember::all()->where('user_id', '=', Auth::user()->id)->first();
+        $dataMember = Member::all()->where('user_id', '=',  Auth::user()->id)->first();
         if ($dataPlan == null) {
             $data = new PlanMember();
         } else {
             $data = PlanMember::all()->where('user_id', '=',  Auth::user()->id)->first();
-            $dataMember = Member::all()->where('user_id', '=',  Auth::user()->id)->first();
         }
         $data->user_id = Auth::user()->id;
         $data->plan_id = $request->plan;
         $data->status = 0;
-        $data->save();
         //
-        $dataMember->plan = $data->plan_id;
+        $currentDate = Carbon::now();
+        $addMonth = $currentDate->addMonths($plan->validity);
+        $validity = $addMonth->endOfMonth();
+
+        $data->validity =  $validity;
+        $data->save();
+        // 
+        $dataMember->plan = $plan->id;
         $dataMember->status = 2;
         $dataMember->save();
-
-        return redirect()->route('user.profile.view')->with('success', ' Plan Data has been selected Successfully!');
+        //payment Create
+        $dataPayment = new Payment();
+        $dataPayment->user_id =  Auth::user()->id;
+        $dataPayment->plan_id =  $plan->id;
+        $dataPayment->validity =  $validity;
+        $dataPayment->amount = $plan->amount * $plan->validity;
+        $dataPayment->plan_member_id = $data->id;
+        $dataPayment->status = 0;
+        $dataPayment->save();
+        return redirect()->route('user.plan.payment', $data->id)->with('success', ' Plan Data has been selected Successfully! Pay now to activate!');
     }
+
     /**
      * Show the form for editing the specified resource.
      */

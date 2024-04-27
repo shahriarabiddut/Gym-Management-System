@@ -1,5 +1,5 @@
 @extends('layout2')
-@section('title', ' Select Plan| User Dashboard')
+@section('title', ' Select Plan | User Dashboard')
 
 @section('content')
 <!-- Page Heading -->
@@ -25,7 +25,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </td>
                 </tr>
                 </tbody>

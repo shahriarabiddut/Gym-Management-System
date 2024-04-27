@@ -3,6 +3,20 @@
 @section('breadcumb', 'Home')
 
 @section('content')
+<!-- Page Heading -->
+<h1 class="text-center">User Dashboard <i class="fas fa-user"></i></h1>
+<!-- Session Messages Starts -->
+@if(Session::has('success'))
+<div class=" row-fluid p-1 m-1 mb-2 bg-success text-white">
+    <p>{{ session('success') }} </p>
+</div>
+@endif
+@if(Session::has('danger'))
+<div class=" row-fluid p-1 m-1 mb-2 bg-danger text-white">
+    <p>{{ session('danger') }} </p>
+</div>
+@endif
+<!-- Session Messages Ends -->
 <div class="row-fluid">
     <div class="span6">  
         <div class="widget-box">
@@ -56,7 +70,8 @@
                       Select Plan
                       @break
                     @case(2)
-                        Pay to Active Membership
+                        Pay to Active Membership 
+                        <a href="{{ route('user.plan.payment',Auth::user()->planmember->id) }}"><button>Pay</button></a>
                         @break
                     @case(3)
                         Under Review
@@ -69,7 +84,7 @@
                 @endswitch
             </td> </tr>
             @if (Auth::user()->member->plan != null)
-             <tr><td>Selected Plan </td><td>{{ Auth::user()->member->plans->name }}</td> </tr>
+             <tr><td>Selected Plan </td><td>{{ Auth::user()->member->plans->name }} - (Valid Before - {{ Auth::user()->planmember->validity }})</td> </tr>
              @endif
              <tr>
               <td><a href="{{ route('user.enroll.edit',Auth::user()->id) }}"><button>Update Weight</button></a>

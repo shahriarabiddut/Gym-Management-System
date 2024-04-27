@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\ProviderController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupportController;
@@ -55,6 +56,11 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     // Select Plan
     Route::get('/plan', [MembershipController::class, 'selectPlan'])->name('plan.plan');
     Route::put('/plan/edit', [MembershipController::class, 'planupdate'])->name('plan.update');
+
+    // Payment
+    Route::get('/payments', [PaymentController::class, 'index'])->name('plan.payments');
+    Route::get('/payment/{id}', [PaymentController::class, 'planPayment'])->name('plan.payment');
+    Route::put('/payment/store', [PaymentController::class, 'paymentupdate'])->name('plan.paymentUpdate');
 });
 
 require __DIR__ . '/auth.php';
