@@ -24,6 +24,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Validity <span class="text-danger">*</span></th>
+                    <td>
+                        <input type="number" min="1" class="form-control" name="validity" placeholder="">
+                    </td>
+                </tr>
+                <tr>
                     <td colspan="2">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </td>

@@ -162,6 +162,7 @@ class MembershipController extends Controller
         $plan = Plan::find($request->plan);
         $request->validate([
             'plan' => 'required',
+            'validity' => 'required',
         ]);
         //
         $dataPlan = PlanMember::all()->where('user_id', '=', Auth::user()->id)->first();
@@ -176,7 +177,7 @@ class MembershipController extends Controller
         $data->status = 0;
         //
         $currentDate = Carbon::now();
-        $addMonth = $currentDate->addMonths($plan->validity);
+        $addMonth = $currentDate->addMonths($plan->validity * $request->validity);
         $validity = $addMonth->endOfMonth();
 
         $data->validity =  $validity;
@@ -190,7 +191,7 @@ class MembershipController extends Controller
         $dataPayment->user_id =  Auth::user()->id;
         $dataPayment->plan_id =  $plan->id;
         $dataPayment->validity =  $validity;
-        $dataPayment->amount = $plan->amount * $plan->validity;
+        $dataPayment->amount = $plan->amount * $request->validity;
         $dataPayment->plan_member_id = $data->id;
         $dataPayment->status = 0;
         $dataPayment->save();

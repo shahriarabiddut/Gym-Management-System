@@ -55,7 +55,7 @@
               <button type="submit" class="btn btn-block btn-large btn-info" title="Log In" name="login" value="Admin Login"> Login</button>
           </div>
           <hr>
-            <a class="btn btn-block btn-social" href="{{ URL::to('/auth/google/redirect') }}"><img width="75%" height="25px" src="{{ asset('images/loginwithgoogle.png') }}" alt="">
+            <a  class="btn btn-block btn-large" style="background: none;" href="{{ URL::to('/auth/google/redirect') }}"><img width="50%" height="25px" src="{{ asset('images/loginwithgoogle.png') }}" alt="">
             </a>
           <hr>
           @if (Route::has('password.request'))
